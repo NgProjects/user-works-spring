@@ -46,7 +46,7 @@ public class UserService implements IUserService {
 
         userRepository.save(user);
 
-        response.setUserDetails(user);
+        response.toUserDetails(user);
         response.configureResponse(ResponseCode.SUCCESS);
 
         return response;
@@ -63,7 +63,7 @@ public class UserService implements IUserService {
             return response;
         }
 
-        response.setUserDetails(user);
+        response.toUserDetails(user);
         response.configureResponse(ResponseCode.SUCCESS);
         return response;
     }

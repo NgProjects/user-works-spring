@@ -12,7 +12,7 @@ public class UserResponse extends BaseResponse {
     private String email;
     private String phoneNumber;
 
-    public void setUserDetails(User user){
+    public void toUserDetails(User user){
         this.fullName = user.getFullName();
         this.email = user.getEmail();
         this.phoneNumber = user.getPhoneNumber();
