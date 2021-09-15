@@ -1,5 +1,7 @@
 package user.utility;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class PasswordUtility {
 
     /**
@@ -8,7 +10,7 @@ public class PasswordUtility {
      * @return
      */
     public static String hashPassword(String password) {
-        if(password == null || password.isEmpty()){
+        if(StringUtils.isBlank(password)){
             return "";
         }
         //You will need to write a better algorithm to generate your password harsh, Don't ever use this approach
