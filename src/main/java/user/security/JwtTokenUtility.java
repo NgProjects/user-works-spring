@@ -29,7 +29,7 @@ public class JwtTokenUtility {
                 .setSubject(String.format("%s,%s", user.getTokenVerifier(), user.getUsername()))
                 .setIssuer(UserServiceConstants.JWT_ISSUER)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 60 * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + 600 * 1000))
                 .signWith(SignatureAlgorithm.HS512, UserServiceConstants.JWT_SECRET)
                 .compact();
     }
@@ -62,16 +62,14 @@ public class JwtTokenUtility {
         try {
             Jwts.parser().setSigningKey(UserServiceConstants.JWT_SECRET).parseClaimsJws(token);
             return true;
-        } catch (SignatureException ex) {
+        } catch (SignatureException | MalformedJwtException ex) {
             log.error("Invalid JWT signature - {}", ex.getMessage());
-        } catch (MalformedJwtException ex) {
-            log.error("Invalid JWT token - {}", ex.getMessage());
         } catch (ExpiredJwtException ex) {
-            log.error("Expired JWT token - {}", ex.getMessage());
+            log.error("JWT token has expired - {}", ex.getMessage());
         } catch (UnsupportedJwtException ex) {
-            log.error("Unsupported JWT token - {}", ex.getMessage());
+            log.error("JWT token is unsupported - {}", ex.getMessage());
         } catch (IllegalArgumentException ex) {
-            log.error("JWT claims string is empty - {}", ex.getMessage());
+            log.error("JWT claims was not provided - {}", ex.getMessage());
         }
         return false;
     }

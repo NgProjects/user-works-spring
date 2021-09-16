@@ -12,12 +12,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 import user.constants.UserServiceConstants;
 import user.entities.User;
 import user.enums.EndpointAccessSpecifier;
+import user.filters.JwtValidationFilter;
 import user.repositories.UserRepository;
 
 import javax.servlet.http.HttpServletResponse;
@@ -29,10 +31,13 @@ import static java.lang.String.format;
 public class ServiceAuth extends WebSecurityConfigurerAdapter {
 
     UserRepository userRepository;
+    private final JwtValidationFilter jwtTokenFilter;
 
     @Autowired
-    public ServiceAuth(UserRepository userRepository) {
+    public ServiceAuth(UserRepository userRepository,
+                       JwtValidationFilter jwtTokenFilter) {
         this.userRepository = userRepository;
+        this.jwtTokenFilter = jwtTokenFilter;
     }
 
     @Override
@@ -63,7 +68,8 @@ public class ServiceAuth extends WebSecurityConfigurerAdapter {
                 .antMatchers(EndpointAccessSpecifier.PUBLIC_ENDPOINT.getPathPattern()).permitAll()
                 .antMatchers(UserServiceConstants.SWAGGER_DOC_URLS).permitAll()//add swagger urls
                 // Our private endpoints
-                .anyRequest().authenticated();;
+                .anyRequest().authenticated().and()
+                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     /**
