@@ -1,6 +1,5 @@
 package user.service.impl;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -59,6 +58,7 @@ public class UserService implements IUserService {
         user.setEmail(request.getEmail());
         user.setFullName(request.getFullName());
         user.setPhoneNumber(request.getPhoneNumber());
+       // user.setCountry();
         user.setTokenVerifier(String.valueOf(System.currentTimeMillis()));
 
         userRepository.save(user);

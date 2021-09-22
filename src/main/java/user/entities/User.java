@@ -9,13 +9,14 @@ import user.utility.PasswordUtility;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
-@Table(name ="user_details")
+@Table(name = "user_details")
 @ToString(callSuper=true)
 @Getter
 @Setter
@@ -40,6 +41,9 @@ public class User extends BaseEntity implements UserDetails, Serializable {
 
     @Column(name="last_login")
     private Timestamp lastLogin;
+
+    @JoinColumn(name = "country_fk")
+    private Country country;
 
     /**
      *
