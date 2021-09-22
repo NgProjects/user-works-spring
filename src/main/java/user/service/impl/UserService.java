@@ -58,7 +58,6 @@ public class UserService implements IUserService {
         user.setEmail(request.getEmail());
         user.setFullName(request.getFullName());
         user.setPhoneNumber(request.getPhoneNumber());
-       // user.setCountry();
         user.setTokenVerifier(String.valueOf(System.currentTimeMillis()));
 
         userRepository.save(user);

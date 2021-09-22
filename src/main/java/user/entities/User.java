@@ -9,7 +9,6 @@ import user.utility.PasswordUtility;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -41,9 +40,6 @@ public class User extends BaseEntity implements UserDetails, Serializable {
 
     @Column(name="last_login")
     private Timestamp lastLogin;
-
-    @JoinColumn(name = "country_fk")
-    private Country country;
 
     /**
      *
