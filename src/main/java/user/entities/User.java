@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
-@Table(name ="user_details")
+@Table(name = "user_details")
 @ToString(callSuper=true)
 @Getter
 @Setter

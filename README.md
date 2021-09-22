@@ -5,5 +5,6 @@
 * Start project with ./mvnw spring-boot:run
 
 Uses open api for api documentation https://springdoc.org/
-
 {{host}}/swagger-ui/index.html?configUrl=/api-docs/swagger-config
+
+Uses redis for caching

@@ -15,4 +15,7 @@ public class SignUpRequest extends BaseUserRequest {
     @NotBlank(message = "Phone Number must be provided")
     private String phoneNumber;
 
+    @NotBlank(message = "Country must be provided")
+    private Long countryId;
+
 }

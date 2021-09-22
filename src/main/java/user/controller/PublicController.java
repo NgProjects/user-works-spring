@@ -3,6 +3,7 @@ package user.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +12,9 @@ import user.constants.UserServiceConstants;
 import user.pojo.LoginResults;
 import user.request.BaseUserRequest;
 import user.request.SignUpRequest;
+import user.response.CountryResponse;
 import user.response.UserResponse;
+import user.service.impl.CountryService;
 import user.service.impl.UserService;
 
 import javax.validation.Valid;
@@ -21,10 +24,13 @@ import javax.validation.Valid;
 public class PublicController {
 
     UserService userService;
+    CountryService countryService;
 
     @Autowired
-    public PublicController(UserService userService) {
+    public PublicController(UserService userService,
+                            CountryService countryService) {
         this.userService = userService;
+        this.countryService = countryService;
     }
 
     @PostMapping("sign-up")
@@ -40,6 +46,11 @@ public class PublicController {
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, bearer)
                 .body(loginResult.getUserResponse());
+    }
+
+    @GetMapping("get-countries")
+    public CountryResponse getCountries() {
+        return countryService.getCountryResponse();
     }
 
 }
