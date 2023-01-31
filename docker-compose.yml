@@ -2,7 +2,7 @@ version: '2'
 
 services:
     userworks:
-        image: 'docker-spring-boot-postgres:latest'
+        image: 'userworks:latest'
         build:
             dockerfile: Dockerfile
             context: .
@@ -24,10 +24,10 @@ services:
         networks:
             - webnet
     db:
-        image: 'postgres:13.1-alpine'
+        image: 'postgres:9.6.24'
         container_name: db
         volumes:
-            - ./database/data:/var/lib/userworks
+            - ./database/data:/var/lib/postgres
         expose:
             - 5433
         environment:
@@ -37,3 +37,4 @@ services:
             - webnet
 networks:
     webnet:
+        driver: bridge
