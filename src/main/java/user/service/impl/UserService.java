@@ -5,7 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import user.constants.UserServiceConstants;
+import user.dtos.KafkaUserMessage;
 import user.dtos.UserDetailDto;
 import user.entities.User;
 import user.enums.ResponseCode;
@@ -28,11 +31,15 @@ public class UserService implements IUserService {
     UserRepository userRepository;
     JwtTokenUtility jwtTokenUtility;
 
+    private final KafkaTemplate<String, KafkaUserMessage> kafkaTemplate;
+
     @Autowired
     public UserService(UserRepository userRepository,
-                       JwtTokenUtility jwtTokenUtility) {
+                       JwtTokenUtility jwtTokenUtility,
+                       KafkaTemplate<String, KafkaUserMessage> kafkaTemplate) {
         this.userRepository = userRepository;
         this.jwtTokenUtility = jwtTokenUtility;
+        this.kafkaTemplate = kafkaTemplate;
     }
 
     @Override
@@ -61,6 +68,10 @@ public class UserService implements IUserService {
         user.setTokenVerifier(String.valueOf(System.currentTimeMillis()));
 
         userRepository.save(user);
+
+        //Send Kafka message
+        KafkaUserMessage kafkaMessage = new KafkaUserMessage(getUserDetailsDto(user));
+        kafkaTemplate.send(UserServiceConstants.KAFKA_TOPIC_NAME, kafkaMessage);
 
         response.toUserDetails(user);
         response.configureResponse(ResponseCode.SUCCESS);
