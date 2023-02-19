@@ -14,6 +14,6 @@ public class KafkaListeners {
             return;
         }
         //do anything with the user details
-        System.out.println("received: " + data.getUserDetails().getEmail() );
+        System.out.println("received: " + data.getUserDetails().getEmail()); //just to see outcome
     }
 }

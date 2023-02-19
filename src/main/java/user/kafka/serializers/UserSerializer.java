@@ -13,7 +13,7 @@ public class UserSerializer implements Serializer<KafkaUserMessage> {
     private final ObjectMapper objectMapper = new ObjectMapper();
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
-        //Serializer.super.configure(configs, isKey);
+        Serializer.super.configure(configs, isKey);
     }
 
     @Override
@@ -30,6 +30,6 @@ public class UserSerializer implements Serializer<KafkaUserMessage> {
 
     @Override
     public void close() {
-        //Serializer.super.close();
+        Serializer.super.close();
     }
 }

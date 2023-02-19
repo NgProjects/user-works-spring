@@ -20,10 +20,8 @@ public class UserDeserializer implements Deserializer<KafkaUserMessage> {
     public KafkaUserMessage deserialize(String s, byte[] bytes) {
         try {
             if (bytes == null){
-                System.out.println("Null received at deserializing");
                 return null;
             }
-            System.out.println(" ...");
             return objectMapper.readValue(new String(bytes, StandardCharsets.UTF_8), KafkaUserMessage.class);
         } catch (Exception e) {
             throw new SerializationException("Error when deserializing byte[] to KafkaUserMessage");
