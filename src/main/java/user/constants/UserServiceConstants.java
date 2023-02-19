@@ -10,4 +10,6 @@ public class UserServiceConstants {
             "/swagger-ui/**",
             "/v3/api-docs/**"
     };
+
+    public static final String KAFKA_TOPIC_NAME = "userworkstopic";
 }
